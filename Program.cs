@@ -12,7 +12,7 @@ namespace DependencyInjection
         static void Main(string[] args)
         {
 			var builder = new ContainerBuilder();
-			builder.RegisterType<Logger>().As<ILogger>();
+			builder.RegisterType<TextLogger>().As<ILogger>();
 			Container = builder.Build();
 
 			using (var scope = Container.BeginLifetimeScope())
@@ -23,7 +23,14 @@ namespace DependencyInjection
 				app.DoSomeAction();
 			}
 
-        }
+			using (var scope = Container.BeginLifetimeScope())
+			{
+				var logger = scope.Resolve<ILogger>();
+
+				MyApplication app = new MyApplication(logger);
+				app.DoSomeAction();
+			}
+		}
     }
 	
 	class MyApplication
