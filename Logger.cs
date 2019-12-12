@@ -12,7 +12,7 @@ namespace DependencyInjection
     {
         public void WriteLog(string msg)
         {
-            Console.WriteLine($"{msg}");
+            Console.WriteLine($"Simply {msg}");
         }
     }
 	

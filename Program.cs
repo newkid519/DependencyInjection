@@ -1,13 +1,28 @@
 ﻿using System;
+using Autofac;
+using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
 
 namespace DependencyInjection
 {
     class Program
     {
+		private static IContainer Container { get; set; }
+
         static void Main(string[] args)
         {
-			MyApplication app = new MyApplication(new Logger());
-			app.DoSomeAction();
+			var builder = new ContainerBuilder();
+			builder.RegisterType<Logger>().As<ILogger>();
+			Container = builder.Build();
+
+			using (var scope = Container.BeginLifetimeScope())
+			{
+				var logger = scope.Resolve<ILogger>();
+
+				MyApplication app = new MyApplication(logger);
+				app.DoSomeAction();
+			}
+
         }
     }
 	
