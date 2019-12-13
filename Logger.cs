@@ -20,8 +20,8 @@ namespace DependencyInjection
 
         public void WriteLog(string msg)
         {
-            Console.WriteLine($"Simply {msg}");
-            _fsLog.Write(msg);
+            Console.WriteLine($"Write message '{msg}' to text file");
+            _fsLog.WriteLine(msg);
         }
 
         #region IDisposable Support
@@ -63,7 +63,7 @@ namespace DependencyInjection
         #endregion
     }
 
-    class AdvancedLogger : ILogger
+    class TimestampLogger : ILogger
     {
         public void WriteLog(string msg)
         {

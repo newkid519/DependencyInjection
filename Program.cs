@@ -5,17 +5,13 @@ using Autofac.Extensions.DependencyInjection;
 
 namespace DependencyInjection
 {
-    class Program
+	class Program
     {
-		private static IContainer Container { get; set; }
-
         static void Main(string[] args)
         {
-			var builder = new ContainerBuilder();
-			builder.RegisterType<TextLogger>().As<ILogger>();
-			Container = builder.Build();
+			ContainerConfiguration.Config();
 
-			using (var scope = Container.BeginLifetimeScope())
+			using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
 			{
 				var logger = scope.Resolve<ILogger>();
 
@@ -23,7 +19,7 @@ namespace DependencyInjection
 				app.DoSomeAction();
 			}
 
-			using (var scope = Container.BeginLifetimeScope())
+			using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
 			{
 				var logger = scope.Resolve<ILogger>();
 
@@ -32,19 +28,4 @@ namespace DependencyInjection
 			}
 		}
     }
-	
-	class MyApplication
-	{
-		ILogger _logger;
-		
-		public MyApplication(ILogger logger)
-		{
-			_logger = logger;
-		}
-		
-		public void DoSomeAction()
-		{
-			_logger.WriteLog("do some action in MyApplication");
-		}
-	}
 }
