@@ -1,6 +1,6 @@
 ﻿namespace DependencyInjection
 {
-    class MyApplication
+    class MyApplication : IApplication
 	{
 		ILogger _logger;
 		
@@ -13,5 +13,10 @@
 		{
 			_logger.WriteLog("do some action in MyApplication");
 		}
+	}
+
+	internal interface IApplication
+	{
+		void DoSomeAction();
 	}
 }

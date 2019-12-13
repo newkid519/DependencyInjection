@@ -11,20 +11,13 @@ namespace DependencyInjection
         {
 			ContainerConfiguration.Config();
 
-			using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
+			for (int i = 0; i < 3; i++)
 			{
-				var logger = scope.Resolve<ILogger>();
-
-				MyApplication app = new MyApplication(logger);
-				app.DoSomeAction();
-			}
-
-			using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
-			{
-				var logger = scope.Resolve<ILogger>();
-
-				MyApplication app = new MyApplication(logger);
-				app.DoSomeAction();
+				using (var scope = ContainerConfiguration.Container.BeginLifetimeScope())
+				{
+					var app = scope.Resolve<IApplication>();
+					app.DoSomeAction();
+				}
 			}
 		}
     }

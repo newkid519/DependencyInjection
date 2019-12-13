@@ -13,6 +13,7 @@ namespace DependencyInjection
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<TextLogger>().As<ILogger>();
+            builder.RegisterType<MyApplication>().As<IApplication>();
             Container = builder.Build();
         }
     }
